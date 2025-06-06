@@ -1,10 +1,12 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from catalog.models import Product
+
 
 # Create your views here.
-def home(request):
-    return render(request, "home.html")
+def index(request):
+    return render(request, "catalog/base.html")
 
 
 def contacts(request):
@@ -15,4 +17,17 @@ def contacts(request):
         return HttpResponse(
             f"Спасибо, {name}! Ваше сообщение получено. Мы свяжемся с вами по вашему контактному номеру - {phone}."
         )
-    return render(request, "contacts.html")
+    return render(request, "catalog/contacts.html")
+
+def products_list(request):
+    products = Product.objects.all()
+    context = {
+        'products': products
+    }
+    return render(request, 'catalog/products_list.html', context=context)
+
+
+def product_detail(request, product_id):
+    product = Product.objects.get(id=product_id)
+    context = {"product": product}
+    return render(request, "catalog/product_detail.html", context=context)
