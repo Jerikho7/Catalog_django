@@ -1,33 +1,25 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.views import View
+from django.views.generic import ListView, DetailView
 
 from catalog.models import Product
 
 
-# Create your views here.
-def index(request):
-    return render(request, "catalog/base.html")
+class ProductListView(ListView):
+    model = Product
 
+class ProductDetailView(DetailView):
+    model = Product
 
-def contacts(request):
-    if request.method == "POST":
-        name = request.POST.get("name")
+class CatalogContactsView(View):
+    def get(self, request):
+        return render(request, 'catalog/contacts.html')
+
+    def post(self, request):
+        name = request.POST.get('name')
         phone = request.POST.get("phone")
-        message = request.POST.get("message")
+        message = request.POST.get('message')
         return HttpResponse(
-            f"Спасибо, {name}! Ваше сообщение получено. Мы свяжемся с вами по вашему контактному номеру - {phone}."
-        )
-    return render(request, "catalog/contacts.html")
-
-def products_list(request):
-    products = Product.objects.all()
-    context = {
-        'products': products
-    }
-    return render(request, 'catalog/products_list.html', context=context)
-
-
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, "catalog/product_detail.html", context=context)
+                    f"Спасибо, {name}! Ваше сообщение получено. Мы свяжемся с вами по вашему контактному номеру - {phone}."
+                )
