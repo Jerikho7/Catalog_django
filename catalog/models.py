@@ -24,7 +24,7 @@ class Product(models.Model):
         blank=True,
         related_name="Категории",
     )
-    price = models.FloatField(max_length=50, verbose_name="Цена за покупку")
+    price = models.IntegerField(max_length=50, verbose_name="Цена за покупку")
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(auto_now=True, verbose_name="Дата последнего изменения")
 

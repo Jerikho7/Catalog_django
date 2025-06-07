@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}Shop {% endblock %}</title>
+    <title>{% block title %}Skyshop{% endblock %}</title>
     <link rel="stylesheet" type="text/css" href="/static/style/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -70,7 +70,7 @@
             <div class="flex-grow-1">
                 <ul class="nav flex-column">
                     <li class="nav-item mb-2">
-                        <a class="nav-link text-white active" aria-current="page" href="base.html">
+                        <a class="nav-link text-white" aria-current="page" href="{% url 'catalog:products_list' %}">
                             <i class="fas fa-home me-2"></i> Главная
                         </a>
                     </li>
@@ -85,7 +85,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="/contacts/">
+                        <a class="nav-link text-white" href="{% url 'catalog:contacts' %}">
                             <i class="fas fa-envelope me-2"></i> Контакты
                         </a>
                     </li>
@@ -171,7 +171,7 @@
         <div class="footer-bottom pt-1">
             <div class="row align-items-center">
                 <div class="col-md-6 text-center text-md-start">
-                    <small class="text-muted">&copy; 2025 Shop. Все права защищены.</small>
+                    <small class="text-muted">&copy; 2025 Skyshop. Все права защищены.</small>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <small class="text-muted">
