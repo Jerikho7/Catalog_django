@@ -10,7 +10,7 @@
         .sidebar-logo {
         width: 40px;
         height: 40px;
-        object-fit: cover; /* Для корректного отображения неквадратных изображений */
+        object-fit: cover;
         }
         .card {
             transition: transform 0.3s;
@@ -101,6 +101,7 @@
             <!-- Блок пользователя -->
             <div class="mt-auto">
                 <hr class="border border-white border-1 opacity-50 my-3">
+                {% if user.is_authenticated %}
                 <div class="dropdown">
                     <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                        id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
@@ -109,13 +110,32 @@
                         <span>Пользователь</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownUser">
+
                         <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Профиль</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Выход</a></li>
+                        <li>
+                            <form method="post" action="{% url 'users:logout' %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                        class="dropdown-item d-flex align-items-center bg-transparent border-0 w-100 text-start">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Выход
+                                </button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
+                {% else %}
+                <div class="d-flex flex-column">
+                    <a href="{% url 'users:register' %}" class="text-white text-decoration-none mb-2">
+                        <i class="fas fa-user-plus me-2"></i>Регистрация
+                    </a>
+                    <a href="{% url 'users:login' %}" class="text-white text-decoration-none">
+                        <i class="fas fa-sign-in-alt me-2"></i>Войти
+                    </a>
+                </div>
+                {% endif %}
             </div>
 
         </div>

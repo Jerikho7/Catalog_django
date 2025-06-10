@@ -1,4 +1,8 @@
 <header>
     <h1 class="text-center mb-4">SkyShop</h1>
-    <h6 class="text-center mb-5 text-muted pb-5">Вы находитесь на сайте, предназначенном для продажи товаров</h6>
+    {% if user.is_authenticated %}
+        <h6 class="text-center mb-5 text-muted pb-5">Добро пожаловать на сайт, предназначенный для покупки электроники</h6>
+    {% else %}
+        <h6 class="text-center mb-5 text-muted pb-5">Для более комфортных покупок, пожалуйста, войдите или зарегистрируйтесь.</h6>
+    {% endif %}
 </header>
