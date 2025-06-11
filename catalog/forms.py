@@ -8,7 +8,7 @@ BLACK_LIST = ["казино", "криптовалюта", "крипта", "би�
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = "__all__"
+        exclude = ["created_at", "updated_at", "is_published", "owner"]
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
@@ -53,3 +53,8 @@ class ProductForm(forms.ModelForm):
                 "Неподдерживаемый формат файла. Используйте JPEG или PNG."
             )
         return image
+
+class ModeratorProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('is_published',)

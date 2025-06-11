@@ -22,12 +22,16 @@
                     <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary btn-sm">
                         <i class="fas fa-arrow-left me-1"></i> Назад к списку
                     </a>
+                    {% if object.owner == user %}
                     <a href="{% url 'catalog:product_update' object.pk %}" class="btn btn-outline-primary btn-sm ms-2">
                         <i class="far fa-edit me-1"></i> Редактировать
                     </a>
+                    {% endif %}
+                    {% if perms.catalog.can_unpublish_product and perms.catalog.delete_product or object.owner == user %}
                     <a href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-outline-danger btn-sm ms-2">
                         <i class="far fa-trash-alt me-1"></i> Удалить
                     </a>
+                    {% endif %}
                 </div>
                 <small class="text-muted">
                     Цена: {{object.price|upper}}₽
