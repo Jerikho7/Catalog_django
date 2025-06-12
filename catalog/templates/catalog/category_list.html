@@ -1,0 +1,23 @@
+{% extends 'catalog/base.html' %}
+{% block title %}Категории{% endblock %}
+
+{% block content %}
+<h2 class="text-center mb-4">Категории</h2>
+
+{% for category in categories %}
+<div class="col-md-6 col-lg-4">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-center my-3">{{ category.name }}</h5>
+            <p class="card-text text-center flex-grow-1">{{ category.description|default:"Описание отсутствует" }}</p>
+            <div class="text-center mt-auto">
+                <a href="{% url 'catalog:products_by_category' category.id %}" class="btn btn-outline-primary w-75">
+                    <i class="fas fa-list me-2"></i>Посмотреть товары
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Skyshop{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="/static/style/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .sidebar-logo {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        }
+        .card {
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .main-content {
+            padding: 2rem;
+            min-height: calc(100vh - 120px);
+        }
+        .nav-link.active {
+        background-color: rgba(13, 110, 253, 0.2) !important;
+        border-left: 3px solid #0d6efd;
+        }
+        footer {
+            background-color: #f8f9fa;
+            padding: 1rem 0;
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+        .footer-links a {
+            color: #6c757d;
+            text-decoration: none;
+            transition: color 0.2s;
+            padding: 0.15rem 0;
+        }
+        .footer-links a:hover {
+            color: #0d6efd;
+        }
+        .footer-brand {
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 0.5rem;
+        }
+        .footer-bottom {
+            border-top: 1px solid #e9ecef;
+            padding-top: 0.5rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+<div class="container-fluid flex-grow-1">
+    <div class="row">
+        <!-- Сайдбар -->
+        <div class="col-md-3 col-lg-2 text-bg-dark p-3 d-flex flex-column">
+            <!-- Шапка сайдбара -->
+            <div class="d-flex align-items-center mb-4">
+                <img src="/static/img/B.jpg" alt="Логотип" class="sidebar-logo rounded-circle me-2">
+                <h4 class="mb-0">Меню</h4>
+            </div>
+            <hr class="border border-white border-1 opacity-50 my-3">
+            <!-- Основное меню -->
+            <div class="flex-grow-1">
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" aria-current="page" href="{% url 'catalog:product_list' %}">
+                            <i class="fas fa-home me-2"></i> Главная
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="{% url 'catalog:category_list' %}">
+                            <i class="fas fa-list me-2"></i> Категории
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white" href="#">
+                            <i class="fas fa-shopping-bag me-2"></i> Заказы
+                        </a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-white"
+                           href="{% url 'catalog:product_create' %}">
+                            <i class="far fa-plus-circle me-2"></i>
+                            Добавить товар
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'catalog:contacts' %}">
+                            <i class="fas fa-envelope me-2"></i> Контакты
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Блок пользователя -->
+            <div class="mt-auto">
+                <hr class="border border-white border-1 opacity-50 my-3">
+                {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                       id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="/static/img/user.png" alt="User" class="rounded-circle me-2"
+                             style="width: 32px; height: 32px;">
+                        <span>{{ user.email }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownUser">
+
+                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i> Профиль</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form method="post" action="{% url 'users:logout' %}">
+                                {% csrf_token %}
+                                <button type="submit"
+                                        class="dropdown-item d-flex align-items-center bg-transparent border-0 w-100 text-start">
+                                    <i class="fas fa-sign-out-alt me-2"></i> Выход
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                {% else %}
+                <div class="d-flex flex-column">
+                    <a href="{% url 'users:register' %}" class="text-white text-decoration-none mb-2">
+                        <i class="fas fa-user-plus me-2"></i>Регистрация
+                    </a>
+                    <a href="{% url 'users:login' %}" class="text-white text-decoration-none">
+                        <i class="fas fa-sign-in-alt me-2"></i>Войти
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+        <!-- Основной контент (10 колонок) -->
+        <div class="col-md-9 col-lg-10 main-content pt-5">
+            <div class="row g-4">
+                <!--Вставка block-->
+                {% block content %}{% endblock%}
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="bg-light mt-auto">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-2 mb-lg-0">
+                <h5 class="footer-brand mb-2">Shop</h5>
+                <p class="text-muted">Интернет-магазин с лучшими товарами по выгодным ценам.</p>
+                <div class="social-links">
+                    <a href="#" class="text-muted me-2"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="text-muted me-2"><i class="fab fa-vk"></i></a>
+                    <a href="#" class="text-muted"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2 mb-1">
+                <h5>Категории</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-2"><a href="#">Рассылки</a></li>
+                    <li class="mb-2"><a href="#">Телеграм боты</a></li>
+                    <li class="mb-2"><a href="#">Полезные утилиты</a></li>
+                    <li class="mb-2"><a href="#">Веб-приложения</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2 mb-1">
+                <h5>Информация</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-2"><a href="#">О компании</a></li>
+                    <li class="mb-2"><a href="#">Доставка и оплата</a></li>
+                    <li class="mb-2"><a href="#">Гарантия</a></li>
+                    <li class="mb-2"><a href="#">Блог</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2 mb-1">
+                <h5>Контакты</h5>
+                <ul class="list-unstyled footer-links">
+                    <li class="mb-2"><a href="/contacts/">Написать нам</a></li>
+                    <li class="mb-2"><a href="#">FAQ</a></li>
+                    <li class="mb-2"><a href="#">Вакансии</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-2 mb-1">
+                <h5>Подписка</h5>
+                <p class="text-muted small">Подпишитесь на наши новости и акции</p>
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control form-control-sm" placeholder="Ваш email">
+                    <button class="btn btn-primary btn-sm" type="button"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom pt-1">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <small class="text-muted">&copy; 2025 Skyshop. Все права защищены.</small>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <small class="text-muted">
+                        <a href="#" class="text-muted me-2">Политика конфиденциальности</a>
+                        <a href="#" class="text-muted">Условия использования</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

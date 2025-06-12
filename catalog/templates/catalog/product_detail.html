@@ -1,0 +1,43 @@
+{% extends 'catalog/base.html'%}
+{% load catalog_tags %}
+{% block title %}Детали товара{% endblock %}
+
+{% block content %}
+
+<h2 class="text-center mb-3 text-muted pb-5">{{object.name_product}}</h2>
+<div class="col d-flex justify-content-center">
+    <div class="card" style="width: 38rem;">
+        <div class="card-img-container"
+             style="height: 250px; overflow: hidden; display: flex; justify-content: center; align-items: center; background: #f5f5f5;">
+            <img src='{{ object.photo|media_filter }}'
+                 class="card-img-top"
+                 style="max-height: 100%; max-width: 100%; object-fit: contain;"
+                 alt="{{object.name_product|upper}}">
+        </div>
+        <div class="card-body d-flex flex-column">
+            <h5 class="card-title text-center my-3">{{object.name_product|upper}}</h5>
+            <p class="card-text text-center flex-grow-1">{{ object.description }}</p>
+            <div class="d-flex justify-content-between align-items-center border-top pt-3">
+                <div class="btn-group">
+                    <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-arrow-left me-1"></i> Назад к списку
+                    </a>
+                    {% if object.owner == user %}
+                    <a href="{% url 'catalog:product_update' object.pk %}" class="btn btn-outline-primary btn-sm ms-2">
+                        <i class="far fa-edit me-1"></i> Редактировать
+                    </a>
+                    {% endif %}
+                    {% if perms.catalog.can_unpublish_product and perms.catalog.delete_product or object.owner == user %}
+                    <a href="{% url 'catalog:product_delete' object.pk %}" class="btn btn-outline-danger btn-sm ms-2">
+                        <i class="far fa-trash-alt me-1"></i> Удалить
+                    </a>
+                    {% endif %}
+                </div>
+                <small class="text-muted">
+                    Цена: {{object.price|upper}}₽
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

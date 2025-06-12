@@ -1,0 +1,54 @@
+[
+    {
+        "model": "catalog.category",
+        "pk": 1,
+        "fields": {
+            "name": "Смартфоны",
+            "description": "Смартфоны: топовые модели, от бюджетных до флагманов с мощными процессорами и отличными камерами."
+        }
+    },
+    {
+        "model": "catalog.category",
+        "pk": 2,
+        "fields": {"name": "Smart-TV", "description": "Умные телевизоры с приложениями, 4K и голосовым управлением."}
+    },
+    {
+        "model": "catalog.product",
+        "pk": 1,
+        "fields": {
+            "name_product": "Xiaomi Redmi Note 13 Pro",
+            "description": "Мощный смартфон с AMOLED-экраном 120 Гц, процессором Snapdragon 7s Gen 2 и камерой 200 Мп. Поддержка 67 Вт быстрой зарядки и стереодинамиков.",
+            "photo": "",
+            "category": 1,
+            "price": 25990.0,
+            "created_at": "2025-06-05",
+            "updated_at": "2025-06-05"
+        }
+    },
+    {
+        "model": "catalog.product",
+        "pk": 2,
+        "fields": {
+            "name_product": "Samsung Galaxy S24 Ultra",
+            "description": "Флагман с экраном Dynamic AMOLED 2X 1440p, процессором Snapdragon 8 Gen 3, камерой 200 Мп и S Pen. Защита IP68, аккумулятор 5000 мАч.",
+            "photo": "",
+            "category": 1,
+            "price": 129990.0,
+            "created_at": "2025-06-05",
+            "updated_at": "2025-06-05"
+        }
+    },
+    {
+        "model": "catalog.product",
+        "pk": 4,
+        "fields": {
+            "name_product": "Xiaomi TV A2 50",
+            "description": "Бюджетный Smart TV с экраном 4K Ultra HD, процессором Quad-Core, Dolby Vision и Android TV. Встроенный Google Assistant, поддержка Netflix, YouTube и других стриминговых сервисов.",
+            "photo": "",
+            "category": 2,
+            "price": 39990.0,
+            "created_at": "2025-06-05",
+            "updated_at": "2025-06-05"
+        }
+    }
+]
